@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import nguyenduynghia.com.karaokesoftware.databinding.ActivityMainBinding;
+//import nguyenduynghia.com.karaokesoftware.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     String DATABASE_NAME="Arirang.sqlite";
@@ -128,50 +128,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void processCopy() {
-        File dbFile = getDatabasePath(DATABASE_NAME);
-        if (!dbFile.exists())
-        {
-            try
+        private void processCopy() {
+            File dbFile = getDatabasePath(DATABASE_NAME);
+            if (!dbFile.exists())
             {
-                CopyDataBaseFromAsset();
-                Toast.makeText(this,
-                        "Copying sucess from Assets folder",
-                        Toast.LENGTH_LONG).show();
-            }
-            catch (Exception e)
-            {
-                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+                try
+                {
+                    CopyDataBaseFromAsset();
+                    Toast.makeText(this,
+                            "Copying sucess from Assets folder",
+                            Toast.LENGTH_LONG).show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+                }
             }
         }
-    }
-    private String getDatabasePath() {
-        return getApplicationInfo().dataDir + DB_PATH_SUFFIX+ DATABASE_NAME;
-    }
+        private String getDatabasePath() {
+            return getApplicationInfo().dataDir + DB_PATH_SUFFIX+ DATABASE_NAME;
+        }
 
-    public void CopyDataBaseFromAsset()
-    {
-        try {
-            InputStream myInput;
-            myInput = getAssets().open(DATABASE_NAME);
-            String outFileName = getDatabasePath();
-            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
-            if (!f.exists())
-                f.mkdir();
-            OutputStream myOutput = new FileOutputStream(outFileName);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = myInput.read(buffer)) > 0) {
-                myOutput.write(buffer, 0, length);
+        public void CopyDataBaseFromAsset()
+        {
+            try {
+                InputStream myInput;
+                myInput = getAssets().open(DATABASE_NAME);
+                String outFileName = getDatabasePath();
+                File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+                if (!f.exists())
+                    f.mkdir();
+                OutputStream myOutput = new FileOutputStream(outFileName);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = myInput.read(buffer)) > 0) {
+                    myOutput.write(buffer, 0, length);
+                }
+                myOutput.flush();
+                myOutput.close();
+                myInput.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            myOutput.flush();
-            myOutput.close();
-            myInput.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
-    }
 
 
     @Override
